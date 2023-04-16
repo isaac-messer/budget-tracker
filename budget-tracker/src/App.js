@@ -5,31 +5,50 @@ import { useEffect, useState, useRef } from 'react';
 function App() {
   const [balance, setBalance] = useState(0.00);
   const [incomeBalance, setIncomeBalance] = useState(0.00);
-  const [expenceBalance, setExpenceBalance] = useState(0.00);
+  const [expenseBalance, setExpenseBalance] = useState(0.00);
 
   // const [transactionType, setTransactionType] = useState('');
-  const inputRef = useRef(null);
+  const inputCategoryRef = useRef(null);
+  const inputAmountRef = useRef(null);
 
-  function formSubmit() {
-    let amountValue = Number(inputRef.current.value);
+  function formSubmit(event) {
+    event.preventDefault()
+    let categoryInputValue = (inputCategoryRef.current.value);
+    let amountInputValue = Number(inputAmountRef.current.value);
     
-    if (amountValue > 0) {
-      setBalance(amountValue + balance);
-      setIncomeBalance(amountValue + incomeBalance);
+    console.log(categoryInputValue);
+    console.log(amountInputValue);
 
-    } else if (amountValue < 0) {
-      setBalance(amountValue + balance);
-      setExpenceBalance(Math.abs(amountValue + expenceBalance));
+    budgetTotals(amountInputValue);
 
-    } else if (amountValue === 0) {
-      setBalance(amountValue + balance);
+    function budgetTotals(amount) {
+      let transactionTotal = Number(amount.toFixed(2));
 
-    } else {
-      alert(`That is not a valid input.`)
+      if (transactionTotal > 0) {
+        
+        setBalance(transactionTotal + balance);
+        setIncomeBalance(transactionTotal + incomeBalance);
 
+      } else if (transactionTotal < 0) {
+        setBalance(transactionTotal + balance);
+        setExpenseBalance(Math.abs(transactionTotal) + expenseBalance);
+
+      } else if (transactionTotal === 0) {
+        setBalance(transactionTotal + balance);
+
+      } else {
+        alert(`That is not a valid input.`)
+
+      };
     };
-    // setBalance(amountValue + balance); 
-    inputRef.current.value = null;
+
+    function transactionHistory() {
+
+    }
+    
+
+    inputCategoryRef.current.value = null;
+    inputAmountRef.current.value = null;
   }
 
 
@@ -41,23 +60,32 @@ function App() {
 
       <div id="budgetBalance">
         <h2>Your Balance</h2>
-        <h2>${balance}</h2>
+        <h2>${balance.toFixed(2)}</h2>
         <div id="budgetBreakDown">
           <h3>Income</h3>
-          <p>+${incomeBalance}</p>
+          <p>+${incomeBalance.toFixed(2)}</p>
           <h3>Expence</h3>
-          <p>-${expenceBalance}</p>
+          <p>-${expenseBalance.toFixed(2)}</p>
         </div>
       </div>
 
       <div id="addTransaction">
-        <input 
-          ref={inputRef} 
-          type="text" 
-          id='amountInput' 
-          name='Amount' 
-        />
-        <button onClick={formSubmit}>Add Transaction</button>
+        <form>
+          <input 
+            ref={inputCategoryRef}
+            type="text" 
+            id='typeInput'
+            name='category'
+          />
+          <input 
+            ref={inputAmountRef} 
+            type="text" 
+            id='amountInput' 
+            name='amount' 
+          />
+          <button onClick={formSubmit}>Add Transaction</button>
+        </form>
+        
       </div>
     </>
   )
