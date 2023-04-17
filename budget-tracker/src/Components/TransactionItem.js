@@ -3,9 +3,9 @@ import React from "react";
 const TransactionItem = (prop) => {
     return (
         <li className="transactionItem">
-            {prop.name}
+            {prop.category}
             <div>
-                ${prop.value}
+                ${prop.amount}
             </div>
         </li>
     );
