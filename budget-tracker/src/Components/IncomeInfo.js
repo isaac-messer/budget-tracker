@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
+import { BudgetContext } from "../Context";
 
 const Income = () => {
+    const { income } = useContext(BudgetContext);
+
     return (
         <div className="IncomeTracker">
-            <span>Income: $0.00</span>
+            <span>Income: ${ income.toFixed(2) }</span>
         </div>
     );
 };
