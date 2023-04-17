@@ -4,6 +4,7 @@ import './App.css';
 import Balance from './Components/BalanceInfo.js'
 import Income from './Components/IncomeInfo.js'
 import Expenses from './Components/ExpensesInfo';
+import TransactionList from './Components/TransactionList';
 
 
 
@@ -13,14 +14,28 @@ function App() {
   return (
     <div id="container">
       <div id="header">
+        <h1>Current Balance</h1>
       </div>
-      <div id="budgetBalance">
-        <div id="budgetBreakDown">
+      <div id="balanceContainer">
+        <div id="balance">
+          <Balance/>
+        </div>
+        <div id="balanceBreakDownContainer">
+          <div id="income">
+            <Income/>
+          </div>
+          <div id="expenses">
+            <Expenses/>
+          </div>
         </div>
       </div>
-      <div id="history">
+      <div id="transactionHistoryContainer">
+        <h3>Transactions</h3>
+        <div>
+          <TransactionList/>
+        </div>
       </div>
-      <div id="addTransaction">
+      <div id="addTransactionFormContainer">
       </div>
     </div>
   );
